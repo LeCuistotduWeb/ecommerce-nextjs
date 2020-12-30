@@ -11,6 +11,7 @@ import {
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import {useContext} from "react";
 import GlobalContext from "../../state/global-context";
+import Link from 'next/link'
 
 const useStyles = theme => ({
     root: {
@@ -52,13 +53,17 @@ const ProductCard = (props) => {
         <Card className={classes.root}>
             <CardContent className={classes.content}>
                 <div className={classes.thumbnailContainer}>
-                    <CardMedia
-                        component="img"
-                        alt={product.title}
-                        image={product.image}
-                        className={classes.thumbnail}
-                        title="Contemplative Reptile"
-                    />
+                    <Link href={`/product/${product.id}`} passHref>
+                        <a>
+                            <CardMedia
+                                component="img"
+                                alt={product.title}
+                                image={product.image}
+                                className={classes.thumbnail}
+                                title="Contemplative Reptile"
+                            />
+                        </a>
+                    </Link>
                 </div>
                 <Typography gutterBottom component="h2" className={classes.name}>
                     {product.title}

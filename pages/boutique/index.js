@@ -1,5 +1,6 @@
+import {useState} from 'react';
 import DefaultLayaout from '../../components/DefaultLayout'
-import { withStyles, Container, Grid, Typography, List, ListItem, ListItemText } from '@material-ui/core'
+import { withStyles, Container, Grid, Typography, List, ListItem, ListItemText, Button } from '@material-ui/core'
 import ProductsList from '../../components/boutique/ProductsList'
 
 const useStyles = theme => ({
@@ -17,7 +18,25 @@ const useStyles = theme => ({
 });
 
 const Boutique = props => {
-    const {classes, productsData} = props;
+    const {classes, productsData, categories} = props;
+    const [products, setProducts] = useState(productsData);
+
+    const handleProductFilters = (type, value) => event => {
+        switch (type) {
+            case 'categories':
+                filterByCategory(value);
+                break;
+            case 'price':
+                filterByPrice(value);
+                break;
+        }
+    };
+
+    const filterByCategory = async (category) => {
+        const productsByCategories = await fetch(`https://fakestoreapi.com/products/category/${category}`)
+            .then(res => res.json());
+        return setProducts(productsByCategories);
+    };
 
     return (
         <DefaultLayaout>
@@ -35,27 +54,23 @@ const Boutique = props => {
                         <Typography variant="h6" className={classes.filterTitle}>Catégories</Typography>
                         <div className={classes.filterListContainer}>
                             <List>
-                                <ListItem className={classes.filterListItem}>
-                                    <ListItemText
-                                        primary="Maquillage"
-                                    />
-                                </ListItem>
-                                <ListItem className={classes.filterListItem}>
-                                    <ListItemText
-                                        primary="Soins visage"
-                                    />
-                                </ListItem>
-                                <ListItem className={classes.filterListItem}>
-                                    <ListItemText
-                                        primary="Parfums"
-                                    />
-                                </ListItem>
+                                {categories && categories.map(category => (
+                                    <ListItem className={classes.filterListItem}>
+                                        <Button onClick={handleProductFilters('categories', category)}>
+                                            {category}
+                                        </Button>
+                                    </ListItem>
+                                ))}
                             </List>
                         </div>
                     </Grid>
 
                     <Grid item xs={12} md={9} className={classes.productsListContainer}>
-                        <ProductsList products={productsData}/>
+                        {products ? (
+                            <ProductsList products={products}/>
+                        ) : (
+                            <Typography>Aucun produit trouvé</Typography>
+                        )}
                     </Grid>
 
                 </Grid>
@@ -66,9 +81,16 @@ const Boutique = props => {
 };
 
 Boutique.getInitialProps = async (ctx) => {
-    const res = await fetch('https://fakestoreapi.com/products')
-    const json = await res.json();
-    return { productsData: json }
+    const productsData = await fetch('https://fakestoreapi.com/products')
+        .then(res=>res.json());
+
+    const categories = await fetch('https://fakestoreapi.com/products/categories')
+        .then(res=>res.json());
+
+    return {
+        productsData,
+        categories,
+    }
 };
 
 export default withStyles(useStyles)(Boutique)

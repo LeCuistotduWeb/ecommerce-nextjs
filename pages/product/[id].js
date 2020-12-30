@@ -5,7 +5,7 @@ import GlobalContext from "../../state/global-context";
 
 const useStyles = theme => ({
     root: {
-        marginTop: theme.spacing(4),
+        marginTop: theme.spacing(5),
     },
 });
 
@@ -24,7 +24,7 @@ const Product = props => {
         <DefaultLayaout>
             <Container maxWidth="lg" className={classes.root}>
 
-                <Grid container className={classes.root}>
+                <Grid container>
 
                     <Grid align="center" item xs={12} md={4} className={classes.productThumbnails}>
                         <img width={200} src={productsData.image} alt={productsData.title}/>
