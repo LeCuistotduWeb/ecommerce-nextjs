@@ -53,7 +53,7 @@ const ProductCard = (props) => {
         <Card className={classes.root}>
             <CardContent className={classes.content}>
                 <div className={classes.thumbnailContainer}>
-                    <Link href={`/product/${product.id}`} passHref>
+                    <Link href={`/product/[id]`} as={`/product/${product.id}`} passHref>
                         <a>
                             <CardMedia
                                 component="img"
