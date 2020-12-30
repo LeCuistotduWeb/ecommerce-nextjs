@@ -8,10 +8,12 @@ export class GlobalProvider extends Component {
         this.state = {
             open_interstitial: false,
             cart: [],
+            notifications: [], // format [{type: "", message: ""}]
             pushObject: this.pushObject.bind(this),
             getCart: this.getCart.bind(this),
             addProductToCart: this.addProductToCart.bind(this),
             removeProductToCart: this.removeProductToCart.bind(this),
+            addNotificationToQueue: this.addNotificationToQueue.bind(this),
         }
     }
 
@@ -65,6 +67,12 @@ export class GlobalProvider extends Component {
             console.log('product not found');
         }
     }
+
+    addNotificationToQueue(notification){
+        const newNotifications = [...this.state.notifications];
+        newNotifications.push(notification);
+        this.setState({notifications: newNotifications});
+    };
 
     componentDidMount() {
         this.getCart()
