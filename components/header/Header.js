@@ -19,6 +19,7 @@ const useStyles = theme => ({
 const Header = props => {
     const {classes} = props
     const context = useContext(GlobalContext);
+    const open_interstitial = context.open_interstitial;
 
     const toggleDrawer = (open) => (event) => {
         if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -40,7 +41,7 @@ const Header = props => {
                                 </Typography>
                             </a>
                         </Link>
-                        <IconButton onClick={toggleDrawer(!context.open_interstitial)}>
+                        <IconButton onClick={toggleDrawer(!open_interstitial)}>
                             <ShoppingBasketIcon className={classes.cartIcon}/>
                         </IconButton>
                     </Toolbar>

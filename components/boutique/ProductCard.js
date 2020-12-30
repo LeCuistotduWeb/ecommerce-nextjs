@@ -42,8 +42,11 @@ const ProductCard = (props) => {
     const context = useContext(GlobalContext);
 
     const handleAddToCart = (e, product) => {
-        context.addProductToCart(product, context.pushObject('open_interstitial', true))
-    }
+        context.addProductToCart(product, ()=>{
+            context.pushObject('open_interstitial', true);
+            window.navigator.vibrate(300);
+        })
+    };
 
     return (
         <Card className={classes.root}>
@@ -74,6 +77,6 @@ const ProductCard = (props) => {
             </CardActions>
         </Card>
     )
-}
+};
 
 export default withStyles(useStyles)(ProductCard)
