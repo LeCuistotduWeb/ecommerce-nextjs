@@ -30,8 +30,19 @@ export class GlobalProvider extends Component {
     }
 
     addProductToCart(product, callback) {
-        const newCart = [...this.state.cart]
-        newCart.push(product)
+        const newCart = [...this.state.cart];
+        const newProduct = {...product};
+        const isAlreadyAddIndex = this.state.cart.findIndex( p => p.id === product.id);
+
+        if(isAlreadyAddIndex > -1){
+            newProduct.quantity =  this.state.cart[isAlreadyAddIndex].quantity + 1;
+            console.log(newProduct.quantity);
+            newCart.splice(isAlreadyAddIndex, 1, newProduct);
+        }else {
+            newProduct.quantity = 1;
+            newCart.push(newProduct);
+        }
+
         this.setState({ cart: newCart }, () => {
             sessionStorage.setItem('cart', JSON.stringify(newCart));
 
@@ -40,16 +51,19 @@ export class GlobalProvider extends Component {
     }
 
     removeProductToCart(id, callback) {
-        const newCart = [...this.state.cart]
-        const ProductIndex = newCart.indexOf(p =>{
-            p.id === id
-        });
-        newCart.splice(ProductIndex, 1)
-        this.setState({ cart: newCart }, () => {
-            sessionStorage.setItem('cart', JSON.stringify(newCart));
+        const newCart = [...this.state.cart];
+        const productIndex = this.state.cart.findIndex(p => p.id === id);
 
-            if (typeof callback !== 'undefined') callback();
-        });
+        if(productIndex > -1){
+            newCart.splice(productIndex, 1);
+            this.setState({ cart: newCart }, () => {
+                sessionStorage.setItem('cart', JSON.stringify(newCart));
+
+                if (typeof callback !== 'undefined') callback();
+            });
+        }else {
+            console.log('product not found');
+        }
     }
 
     componentDidMount() {

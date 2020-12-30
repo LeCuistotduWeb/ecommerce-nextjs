@@ -17,6 +17,6 @@ const ProductList = (props) => {
             ))}
         </Grid>
     )
-}
+};
 
 export default withStyles(useStyles)(ProductList)
