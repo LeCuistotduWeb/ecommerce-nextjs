@@ -1,13 +1,13 @@
 import DefaultLayaout from '../components/DefaultLayout'
-import { withStyles, Button, Container, Grid, Typography } from '@material-ui/core'
+import {withStyles, Button, Container, Grid, Typography, makeStyles} from '@material-ui/core'
 import Link from 'next/link'
 
-const useStyles = theme => ({
+const useStyles = theme => makeStyles(()=>({
     container: {marginTop: theme.spacing(5)}
-});
+}));
 
 const  Home = props => {
-    const {classes} = props
+    const classes = useStyles(props)
     return (
         <DefaultLayaout>
             <Container maxWidth="sm" className={classes.container}>
@@ -35,4 +35,4 @@ const  Home = props => {
         </DefaultLayaout>
     )
 }
-export default withStyles(useStyles)(Home)
+export default Home

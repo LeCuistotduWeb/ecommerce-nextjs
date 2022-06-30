@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import {GlobalProvider} from "../state/global-context";
-import { ThemeProvider} from "@material-ui/styles"
+import {ThemeProvider} from "@material-ui/core";
 import { CssBaseline } from '@material-ui/core';
 import theme from '../theme/theme';
 

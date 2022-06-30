@@ -1,4 +1,4 @@
-import {withStyles, AppBar, Toolbar, Typography, IconButton, Container, Grid} from '@material-ui/core'
+import {withStyles, AppBar, Toolbar, Typography, IconButton, Container} from '@material-ui/core'
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import Link from 'next/link'
 import Interstitial from '../Interstitial'
@@ -13,16 +13,12 @@ const useStyles = theme => ({
     },
     cartIcon: {
         color: theme.palette.light,
-    },
-    navigation: {
-        width: "auto",
-    },
+    }
 });
 
 const Header = props => {
     const {classes} = props
     const context = useContext(GlobalContext);
-    const open_interstitial = context.open_interstitial;
 
     const toggleDrawer = (open) => (event) => {
         if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -37,31 +33,16 @@ const Header = props => {
             <AppBar position="static" elevation={0}>
                 <Container maxWidth="lg">
                     <Toolbar className={classes.toolbar}>
-                        <div>
-                            <Link href="/" passHref>
-                                <a>
-                                    <Typography variant="h4" className={classes.title}>
-                                        SuperShop
-                                    </Typography>
-                                </a>
-                            </Link>
-                        </div>
-                        <Grid container alignItems="center" classes={{root: classes.navigation}}>
-                            <Grid item>
-                                <Link href="/parrainage" passHref>
-                                    <a>
-                                        <Typography>
-                                            Parrainage
-                                        </Typography>
-                                    </a>
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <IconButton onClick={toggleDrawer(!open_interstitial)}>
-                                    <ShoppingBasketIcon className={classes.cartIcon}/>
-                                </IconButton>
-                            </Grid>
-                        </Grid>
+                        <Link href="/" passHref>
+                            <a>
+                                <Typography variant="h4" className={classes.title}>
+                                    SuperShop
+                                </Typography>
+                            </a>
+                        </Link>
+                        <IconButton onClick={toggleDrawer(!context.open_interstitial)}>
+                            <ShoppingBasketIcon classes={{root: classes.cartIcon}}/>
+                        </IconButton>
                     </Toolbar>
                 </Container>
             </AppBar>

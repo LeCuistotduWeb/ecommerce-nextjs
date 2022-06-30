@@ -1,5 +1,6 @@
 import Header from './header/Header'
 import Footer from './footer/Footer'
+import Interstitial from './Interstitial'
 import { withStyles } from '@material-ui/core'
 
 // ===== Basic Layout ===== //

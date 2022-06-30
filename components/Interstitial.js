@@ -25,8 +25,10 @@ const useStyles = theme => ({
 
     productItemImg: {
         width: "100px",
-        height: "auto",
+        height: "100%",
         maxHeight: "90px",
+        objectFit: 'contain',
+        maxWidth: '56px',
         marginRight: theme.spacing(2),
     },
 
@@ -40,24 +42,24 @@ const useStyles = theme => ({
 const Interstitial = props => {
     const {classes} = props;
     const context = useContext(GlobalContext);
-    const cart = context.cart;
-    const [totalPrice, setTotalPrice] = useState(0);
+    const cart = context.cart
+    const [totalPrice, setTotalPrice] = useState(0)
 
     useEffect(() => {
         getTotalPrice()
-    });
+    })
 
     const handleRemoveProduct = id => {
         context.removeProductToCart(id)
-    };
+    }
 
     const getTotalPrice = () => {
         let totalPrice = 0;
         cart.map(p => {
             totalPrice += p.price
-        });
+        })
         return setTotalPrice(totalPrice)
-    };
+    }
 
     return (
         <SwipeableDrawer
@@ -99,7 +101,6 @@ const Interstitial = props => {
                                 <div className={classes.productItemContent}>
                                     <Typography>{product.title}</Typography>
                                     <Typography>{product.price}euros</Typography>
-                                    <Typography>X{product.quantity}</Typography>
                                     <IconButton onClick={() => handleRemoveProduct(product.id)} className={classes.deleteIcon}>
                                         <DeleteIcon color="secondary"/>
                                     </IconButton>

@@ -11,7 +11,6 @@ import {
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import {useContext} from "react";
 import GlobalContext from "../../state/global-context";
-import Link from 'next/link'
 
 const useStyles = theme => ({
     root: {
@@ -30,8 +29,8 @@ const useStyles = theme => ({
     },
     thumbnail: {
         maxHeight: '170px',
-        width: "auto",
         margin: "auto",
+        objectFit: 'contain',
     },
     name: {
         fontSize: '1rem',
@@ -43,27 +42,20 @@ const ProductCard = (props) => {
     const context = useContext(GlobalContext);
 
     const handleAddToCart = (e, product) => {
-        context.addProductToCart(product, ()=>{
-            context.pushObject('open_interstitial', true);
-            window.navigator.vibrate(300);
-        })
-    };
+        context.addProductToCart(product, context.pushObject('open_interstitial', true))
+    }
 
     return (
         <Card className={classes.root}>
             <CardContent className={classes.content}>
                 <div className={classes.thumbnailContainer}>
-                    <Link href={`/product/[id]`} as={`/product/${product.id}`} passHref>
-                        <a>
-                            <CardMedia
-                                component="img"
-                                alt={product.title}
-                                image={product.image}
-                                className={classes.thumbnail}
-                                title="Contemplative Reptile"
-                            />
-                        </a>
-                    </Link>
+                    <CardMedia
+                        component="img"
+                        alt={product.title}
+                        image={product.image}
+                        className={classes.thumbnail}
+                        title="Contemplative Reptile"
+                    />
                 </div>
                 <Typography gutterBottom component="h2" className={classes.name}>
                     {product.title}
@@ -82,6 +74,6 @@ const ProductCard = (props) => {
             </CardActions>
         </Card>
     )
-};
+}
 
 export default withStyles(useStyles)(ProductCard)
